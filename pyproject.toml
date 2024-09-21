@@ -24,6 +24,7 @@ dependencies = [
     "twilio>=7.15,<8.0",
     "pydantic>=1.10,<2.0",
     "jmespath>=1.0.0,<2.0",
+    "stripe>=8.4.0,<9.0",
 ]
 
 [project.optional-dependencies]
@@ -42,7 +43,7 @@ tests = [
     "tox",
     "sphinx",
     "furo",
-    "moto[s3,ssm]",
+    "moto[s3,ssm]>=4.0,<5.0",
     "types-requests",
 ]
 
@@ -60,6 +61,8 @@ aws_lambda = "grove.entrypoints.aws_lambda:entrypoint"
 local_process = "grove.entrypoints.local_process:entrypoint"
 
 [project.entry-points."grove.connectors"]
+fleetdm_host_logs = "grove.connectors.fleetdm.host_logs:Connector"
+fleetdm_software_logs = "grove.connectors.fleetdm.software_logs:Connector"
 atlassian_audit_events = "grove.connectors.atlassian.audit_events:Connector"
 github_audit_log = "grove.connectors.github.audit_log:Connector"
 gsuite_activities = "grove.connectors.gsuite.activities:Connector"
@@ -74,6 +77,7 @@ sf_event_log = "grove.connectors.sf.event_log:Connector"
 sfmc_audit_events = "grove.connectors.sfmc.audit_events:Connector"
 sfmc_security_events = "grove.connectors.sfmc.security_events:Connector"
 slack_audit_logs = "grove.connectors.slack.audit_logs:Connector"
+stripe_events = "grove.connectors.stripe.events:Connector"
 tines_audit_logs = "grove.connectors.tines.audit_logs:Connector"
 tfc_audit_trails = "grove.connectors.tfc.audit_trails:Connector"
 torq_activity_logs = "grove.connectors.torq.activity_logs:Connector"
@@ -85,6 +89,7 @@ zoom_activities = "grove.connectors.zoom.activities:Connector"
 zoom_operationlogs = "grove.connectors.zoom.operationlogs:Connector"
 oomnitza_activities = "grove.connectors.oomnitza.activities:Connector"
 
+
 [project.entry-points."grove.caches"]
 aws_dynamodb = "grove.caches.aws_dynamodb:Handler"
 local_memory = "grove.caches.local_memory:Handler"
@@ -93,6 +98,7 @@ local_memory = "grove.caches.local_memory:Handler"
 aws_s3 = "grove.outputs.aws_s3:Handler"
 local_file = "grove.outputs.local_file:Handler"
 local_stdout = "grove.outputs.local_stdout:Handler"
+remote_http = "grove.outputs.remote_http:Handler"
 
 [project.entry-points."grove.configs"]
 aws_ssm = "grove.configs.aws_ssm:Handler"
@@ -115,7 +121,7 @@ files = [
     "./grove/**/*.py",
     "./tests/**/*.py"
 ]
-disable_error_code = "attr-defined, union-attr"
+disable_error_code = "attr-defined, union-attr, unused-ignore"
 allow_redefinition = false
 check_untyped_defs = true
 disallow_any_generics = true
